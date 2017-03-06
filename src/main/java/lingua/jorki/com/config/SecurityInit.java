@@ -1,4 +1,4 @@
-package erpsystem.config;
+package net.proselyte.springsecurityapp.config;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

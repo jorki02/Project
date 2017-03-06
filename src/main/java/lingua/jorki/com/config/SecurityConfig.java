@@ -1,8 +1,9 @@
-package erpsystem.config;
+package net.proselyte.springsecurityapp.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,22 +14,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Created by Саша on 05.03.2017.
+ */
+
 @Configuration
 @EnableWebSecurity
-public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
-    /*@Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("superadmin").password("superadmin").roles("SUPERADMIN");
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/confidential*//**").access("hasRole('ROLE_SUPERADMIN')")
-                .and().formLogin().defaultSuccessUrl("/", false);
-    }*/
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -46,21 +38,18 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/confidential*").access("hasRole('ADMIN')")
-                .and().formLogin().defaultSuccessUrl("/", false)
-                .defaultSuccessUrl("/", false)
-                .and().csrf().disable()
-                .logout().invalidateHttpSession(true).deleteCookies();
-        http.authorizeRequests()
-                .antMatchers("/TruninAlex").access("hasRole('ADMIN')")
-                .and().formLogin().defaultSuccessUrl("/", false)
-                .defaultSuccessUrl("/", false)
-                .and().csrf().disable()
-                .logout().invalidateHttpSession(true).deleteCookies();
+                .antMatchers("/").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+                .antMatchers("/welcome").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+                .antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
+                .and()
+                .formLogin().loginPage("/login").defaultSuccessUrl("/welcome").failureUrl("/login?error").passwordParameter("password").usernameParameter("username")
+                .and()
+                .logout().logoutSuccessUrl("/login?logout");
     }
 
     @Bean
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();
     }
+
 }
