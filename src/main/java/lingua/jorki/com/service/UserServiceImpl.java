@@ -1,11 +1,11 @@
-package net.proselyte.springsecurityapp.service;
+package lingua.jorki.com.service;
 
-import net.proselyte.springsecurityapp.dao.RoleDao;
-import net.proselyte.springsecurityapp.dao.UserDao;
-import net.proselyte.springsecurityapp.model.Role;
-import net.proselyte.springsecurityapp.model.User;
+import lingua.jorki.com.dao.RoleDao;
+import lingua.jorki.com.dao.UserDao;
+import lingua.jorki.com.model.Role;
+import lingua.jorki.com.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     private RoleDao roleDao;
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private PasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void save(User user) {

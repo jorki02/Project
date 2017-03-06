@@ -1,8 +1,8 @@
-package erpsystem.config;
+package lingua.jorki.com.config;
 
 
 
-import erpsystem.config.application.WebConfig;
+import lingua.jorki.com.config.application.WebConfig;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

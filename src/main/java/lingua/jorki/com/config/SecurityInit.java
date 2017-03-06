@@ -1,4 +1,4 @@
-package net.proselyte.springsecurityapp.config;
+package lingua.jorki.com.config;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

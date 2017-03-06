@@ -17,7 +17,7 @@
     <title>Create an account</title>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/common.css" rel="stylesheet">
+    <link href="/css/signin.css" rel="stylesheet">
 
 
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -29,11 +29,11 @@
 
 <div class="container">
 
-    <form:form method="POST" modelAttribute="userForm" class="form-signin">
-        <h2 class="form-signin-heading">Create your account</h2>
+    <form:form method="POST" modelAttribute="userForm" class="col-sm-offset-4 col-sm-4" role="form">
         <spring:bind path="username">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="username" class="form-control" placeholder="Username"
+                <label for="inputLogin">Login</label>
+                <form:input id="inputLogin" type="text" class="form-control" path="username" placeholder="Username"
                             autofocus="true"></form:input>
                 <form:errors path="username"></form:errors>
             </div>
@@ -41,14 +41,17 @@
 
         <spring:bind path="password">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
+                <label for="inputPassword">Password</label>
+                <form:input id="inputPassword" type="password" path="password" class="form-control"
+                            placeholder="Password"></form:input>
                 <form:errors path="password"></form:errors>
             </div>
         </spring:bind>
 
         <spring:bind path="confirmPassword">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="password" path="confirmPassword" class="form-control"
+                <label for="inputConfirmPassword">Confirm Password</label>
+                <form:input id="inputConfirmPassword" type="password" path="confirmPassword" class="form-control"
                             placeholder="Confirm your password"></form:input>
                 <form:errors path="confirmPassword"></form:errors>
             </div>

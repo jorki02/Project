@@ -1,14 +1,15 @@
-package net.proselyte.springsecurityapp.service;
+package lingua.jorki.com.service;
 
-import net.proselyte.springsecurityapp.dao.UserDao;
-import net.proselyte.springsecurityapp.model.Role;
-import net.proselyte.springsecurityapp.model.User;
+import lingua.jorki.com.dao.UserDao;
+import lingua.jorki.com.model.Role;
+import lingua.jorki.com.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
@@ -21,7 +22,7 @@ import java.util.Set;
  * @version 1.0
  */
 
-
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired

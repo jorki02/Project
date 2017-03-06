@@ -1,9 +1,9 @@
-package net.proselyte.springsecurityapp.controller;
+package lingua.jorki.com.controller;
 
-import net.proselyte.springsecurityapp.model.User;
-import net.proselyte.springsecurityapp.service.SecurityService;
-import net.proselyte.springsecurityapp.service.UserService;
-import net.proselyte.springsecurityapp.validator.UserValidator;
+import lingua.jorki.com.model.User;
+import lingua.jorki.com.service.SecurityService;
+import lingua.jorki.com.service.UserService;
+import lingua.jorki.com.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Controller for {@link net.proselyte.springsecurityapp.model.User}'s pages.
+ * Controller for {@link lingua.jorki.com.model.User}'s pages.
  *
  * @author Eugene Suleimanov
  * @version 1.0
@@ -48,7 +48,11 @@ public class UserController {
 
         userService.save(userForm);
 
-        securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
+        try {
+            securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return "redirect:/welcome";
     }
@@ -68,11 +72,7 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-        return "welcome";
+        return "ru/welcome";
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String admin(Model model) {
-        return "admin";
-    }
 }

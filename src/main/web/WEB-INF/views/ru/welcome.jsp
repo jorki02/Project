@@ -1,49 +1,94 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Sign in</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/css/signin.css" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+
+    <title>Static Top Navbar Example for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-static-top.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
+
 <body>
+
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <li class="active"><a class="btn btn-default navbar-btn" onclick="document.forms['logoutForm'].submit()">Выйти</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+
 <div class="container">
 
-    <form class="form-horizontal form-signin" role="form">
-        <div class="form-group">
-            <label for="inputLogin" class="col-sm-2 control-label">Login</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputLogin" placeholder="Login">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-6">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> Remember me
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-4">
-                <button type="submit" class="btn btn-default">Sign in</button>
-            </div>
-        </div>
-    </form>
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <h1>Статическое меню</h1>
+        <p>Этот шаблон <strong>статической панели навигации</strong> создан для наглядного примера. Меню растянуто на всю ширину экрана и прижато к верхней части страницы.</p>
+        <p>Чтобы увидеть разницу между простым, статическим и фиксированным меню, покрутите колесо мышки.</p>
+        <p>
+            <a class="btn btn-lg btn-primary" role="button">Панель навигации &raquo;</a>
+        </p>
+    </div>
 
-</div>
+</div> <!-- /container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="${contextPath}/js/bootstrap.min.js"></script>
 </body>
 </html>

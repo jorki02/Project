@@ -1,10 +1,10 @@
-package net.proselyte.springsecurityapp.service;
+package lingua.jorki.com.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +23,7 @@ public class SecurityServiceImpl implements SecurityService {
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -44,7 +44,11 @@ public class SecurityServiceImpl implements SecurityService {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
-        authenticationManager.authenticate(authenticationToken);
+        try {
+            authenticationManagerBuilder.build().authenticate(authenticationToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (authenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);

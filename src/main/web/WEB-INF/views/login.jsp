@@ -17,7 +17,7 @@
     <title>Log in with your account</title>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/common.css" rel="stylesheet">
+    <link href="/css/signin.css" rel="stylesheet">
 
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -28,23 +28,34 @@
 
 <div class="container">
 
-    <h1>${contextPath}</h1>
-
-    <form method="POST" action="${contextPath}/login" class="form-signin">
-        <h2 class="form-heading">Log in</h2>
-
+    <form method="POST" action="${contextPath}/login" class="form-horizontal form-signin">
         <div class="form-group ${error != null ? 'has-error' : ''}">
-            <span>${message}</span>
-            <input name="username" type="text" class="form-control" placeholder="Username"
-                   autofocus="true"/>
-            <input name="password" type="password" class="form-control" placeholder="Password"/>
-            <span>${error}</span>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+            <label for="inputLogin" class="col-sm-2 control-label">Login</label>
+            <div class="col-sm-10">
+                <input name="username" type="text" class="form-control" id="inputLogin" placeholder="Login">
+            </div>
+        </div>
+        <div class="form-group ${error != null ? 'has-error' : ''}">
+            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Remember me
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-4">
+                <button type="submit" class="btn btn-default">Sign in</button>
+            </div>
             <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
         </div>
-
     </form>
 
 </div>

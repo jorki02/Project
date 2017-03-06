@@ -1,9 +1,8 @@
-package net.proselyte.springsecurityapp.config;
+package lingua.jorki.com.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,13 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-                .antMatchers("/welcome").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-                .antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/").access("hasAnyRole('ROLE_USER')")
+                .antMatchers("/welcome").access("hasAnyRole('ROLE_USER')")
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/welcome").failureUrl("/login?error").passwordParameter("password").usernameParameter("username")
                 .and()
-                .logout().logoutSuccessUrl("/login?logout");
+                .logout().logoutSuccessUrl("/login?logout")
+                .and()
+                .csrf().disable();
     }
 
     @Bean

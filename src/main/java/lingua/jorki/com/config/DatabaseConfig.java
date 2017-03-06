@@ -1,4 +1,4 @@
-package net.proselyte.springsecurityapp.config;
+package lingua.jorki.com.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +13,15 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.Properties;
 
 /**
  * Created by Саша on 05.03.2017.
  */
 @Configuration
-@EnableJpaRepositories("net.proselyte.springsecurityapp.dao")
+@EnableJpaRepositories("lingua.jorki.com.dao")
 @EnableTransactionManagement
-@ComponentScan({"net.proselyte.springsecurityapp.config"})
+@ComponentScan({"lingua.jorki.com.config"})
 @PropertySource(value = {"classpath:database.properties", "classpath:hibernate.properties"})
 public class DatabaseConfig {
 
@@ -43,7 +42,7 @@ public class DatabaseConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource());
-        entityManagerFactory.setPackagesToScan("net.proselyte.springsecurityapp.model");
+        entityManagerFactory.setPackagesToScan("lingua.jorki.com.model");
         entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactory.setJpaProperties(hibernateProperties());
         return entityManagerFactory;

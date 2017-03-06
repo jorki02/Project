@@ -1,4 +1,4 @@
-package net.proselyte.springsecurityapp.model;
+package lingua.jorki.com.model;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,7 +15,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "username")

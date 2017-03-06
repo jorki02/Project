@@ -1,6 +1,6 @@
-package net.proselyte.springsecurityapp.dao;
+package lingua.jorki.com.dao;
 
-import net.proselyte.springsecurityapp.model.User;
+import lingua.jorki.com.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserDao extends JpaRepository<User, Long> {

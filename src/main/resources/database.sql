@@ -1,35 +1,51 @@
 -- Table: users
-CREATE TABLE users (
-  id       INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
+
+CREATE TABLE users
+(
+  id INTEGER NOT NULL,
+  username character varying(255) NOT NULL,
+  password character varying(255) NOT NULL
 )
-  ENGINE = InnoDB;
+WITH (
+OIDS=FALSE
+);
+ALTER TABLE users
+  OWNER TO postgres;
 
 -- Table: roles
-CREATE TABLE roles (
-  id   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL
+
+CREATE TABLE roles
+(
+  id INTEGER NOT NULL,
+  name character varying(255) NOT NULL
 )
-  ENGINE = InnoDB;
+WITH (
+OIDS=FALSE
+);
+ALTER TABLE roles
+  OWNER TO postgres;
 
--- Table for mapping user and roles: user_roles
-CREATE TABLE user_roles (
-  user_id INT NOT NULL,
-  role_id INT NOT NULL,
+-- Table: user_roles
 
-  FOREIGN KEY (user_id) REFERENCES users (id),
-  FOREIGN KEY (role_id) REFERENCES roles (id),
-
-  UNIQUE (user_id, role_id)
+CREATE TABLE user_roles
+(
+  user_id integer NOT NULL,
+  role_id integer NOT NULL,
+  CONSTRAINT role_id_fk FOREIGN KEY (role_id)
+  REFERENCES roles (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT uesr_id_fk FOREIGN KEY (user_id)
+  REFERENCES users (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT unique_user_role UNIQUE (user_id, role_id)
 )
-  ENGINE = InnoDB;
+WITH (
+OIDS=FALSE
+);
+ALTER TABLE user_roles
+  OWNER TO postgres;
 
 -- Insert data
 
-INSERT INTO users VALUES (1, 'proselyte', '$2a$11$uSXS6rLJ91WjgOHhEGDx..VGs7MkKZV68Lv5r1uwFu7HgtRn3dcXG');
-
 INSERT INTO roles VALUES (1, 'ROLE_USER');
-INSERT INTO roles VALUES (2, 'ROLE_ADMIN');
-
-INSERT INTO user_roles VALUES (1, 2);
+INSERT INTO roles VALUES (2, 'ROLE_PREMIUM_USER');

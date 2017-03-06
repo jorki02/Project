@@ -1,9 +1,9 @@
-package net.proselyte.springsecurityapp.service;
+package lingua.jorki.com.service;
 
-import net.proselyte.springsecurityapp.model.User;
+import lingua.jorki.com.model.User;
 
 /**
- * Service class for {@link net.proselyte.springsecurityapp.model.User}
+ * Service class for {@link lingua.jorki.com.model.User}
  *
  * @author Eugene Suleimanov
  * @version 1.0

@@ -1,7 +1,7 @@
-package net.proselyte.springsecurityapp.validator;
+package lingua.jorki.com.validator;
 
-import net.proselyte.springsecurityapp.model.User;
-import net.proselyte.springsecurityapp.service.UserService;
+import lingua.jorki.com.model.User;
+import lingua.jorki.com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -9,7 +9,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Validator for {@link net.proselyte.springsecurityapp.model.User} class,
+ * Validator for {@link lingua.jorki.com.model.User} class,
  * implements {@link Validator} interface.
  *
  * @author Eugene Suleimanov
@@ -32,7 +32,7 @@ public class UserValidator implements Validator {
         User user = (User) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "Required");
-        if (user.getUsername().length() < 8 || user.getUsername().length() > 32) {
+        if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
             errors.rejectValue("username", "Size.userForm.username");
         }
 
@@ -41,7 +41,7 @@ public class UserValidator implements Validator {
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
-        if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
+        if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
             errors.rejectValue("password", "Size.userForm.password");
         }
 
