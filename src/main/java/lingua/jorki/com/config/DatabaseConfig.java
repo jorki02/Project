@@ -1,5 +1,7 @@
 package lingua.jorki.com.config;
 
+import lingua.jorki.com.JDBC.JDBCService;
+import lingua.jorki.com.JDBC.JDBCServiceImpl;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -27,6 +31,15 @@ public class DatabaseConfig {
 
     @Autowired
     Environment environment;
+
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource());
+        sessionFactory.setPackagesToScan("lingua.jorki.com.entity");
+        sessionFactory.setHibernateProperties(hibernateProperties());
+        return sessionFactory;
+    }
 
     @Bean
     public BasicDataSource dataSource(){
@@ -63,6 +76,16 @@ public class DatabaseConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate.setDataSource(dataSource());
+        return jdbcTemplate;
+    }
+
+    @Bean
+    public JDBCService jdbcService(){return new JDBCServiceImpl(jdbcTemplate());}
 
 
 }

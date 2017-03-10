@@ -1,7 +1,12 @@
 package lingua.jorki.com.dao;
 
-/**
- * Created by Саша on 07.03.2017.
- */
-public interface WordDao {
+import lingua.jorki.com.model.User;
+import lingua.jorki.com.model.Word;
+
+import java.util.List;
+
+public interface WordDao{
+
+    List<Word> getWordListByUser(User user);
+
 }

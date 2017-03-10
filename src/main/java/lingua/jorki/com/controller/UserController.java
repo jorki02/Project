@@ -54,7 +54,7 @@ public class UserController {
             e.printStackTrace();
         }
 
-        return "redirect:/welcome";
+        return "redirect:/ru/welcome";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -70,9 +70,14 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/ru/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         return "ru/welcome";
+    }
+
+    @RequestMapping(value = {"/ru/dictionary"}, method = RequestMethod.GET)
+    public String dictionary(Model model) {
+        return "ru/dictionary";
     }
 
 }

@@ -1,4 +1,6 @@
-package lingua.jorki.com.model;
+package lingua.jorki.com.modelJDBC;
+
+import lingua.jorki.com.model.User;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -6,32 +8,17 @@ import java.util.Set;
 /**
  * Created by Саша on 07.03.2017.
  */
-@Entity
-@Table(name="words")
 public class Word {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "english")
+    private Long englishId;
     private String english;
 
-    @Column(name = "russian")
-    private String russian;
-
-    @Column(name = "example")
-    private String example;
-
-    @ManyToMany(mappedBy = "words")
-    private Set<User> users;
-
-    public Long getId() {
-        return id;
+    public Long getEnglishId() {
+        return englishId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEnglishId(Long englishId) {
+        this.englishId = englishId;
     }
 
     public String getEnglish() {
@@ -40,30 +27,6 @@ public class Word {
 
     public void setEnglish(String english) {
         this.english = english;
-    }
-
-    public String getRussian() {
-        return russian;
-    }
-
-    public void setRussian(String russian) {
-        this.russian = russian;
-    }
-
-    public String getExample() {
-        return example;
-    }
-
-    public void setExample(String example) {
-        this.example = example;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
 }

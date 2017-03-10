@@ -38,11 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").access("hasAnyRole('ROLE_USER')")
-                .antMatchers("/welcome").access("hasAnyRole('ROLE_USER')")
+                .antMatchers("/ru/**").access("hasAnyRole('ROLE_USER')")
                 .and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/welcome").failureUrl("/login?error").passwordParameter("password").usernameParameter("username")
                 .and()
-                .logout().logoutSuccessUrl("/login?logout")
+                .logout().logoutSuccessUrl("/")
                 .and()
                 .csrf().disable();
     }
