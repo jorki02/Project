@@ -1,0 +1,23 @@
+.container-for-train{
+    width: 970px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+div .jumbotron{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+div .word-pane{
+    text-align: center;
+    padding-top: 50px;
+    height: 400px;
+}
+
+div .dates > button{
+    margin-left: 10px;
+    margin-right: 10px;
+}

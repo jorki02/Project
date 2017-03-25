@@ -43,6 +43,10 @@
         };
 
         var getTranslations = function () {
+            if ($('#word').val() == null || $('#word').val() == ""){
+                return;
+            }
+
             $.ajax({
                 type: 'GET',
                 url: service + "/" + $('#word').val(),
@@ -52,21 +56,65 @@
                     loadTranslations(result);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    loadEmptyTable();
+                    getYandexTranslate();
                 }
             });
         };
 
-        var addWord = function (wordId, translationId) {
-            var JSONObject = {
-                'english_id': wordId,
-                'translation_id': translationId,
-            };
+        var yandexService = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20170310T184221Z.22ded5c313472d3a.51d12957e7aee8f78d6be5fb41bea7a5922fb340&lang=en-ru&text=';
+
+        var getYandexTranslate = function(){
+            $.ajax({
+                type: 'GET',
+                url: yandexService + $('#word').val(),
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    addListOfWord(result);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    loadEmptyTable();
+                }
+            })
+        }
+
+        var addListOfWord = function (result) {
+            var mass = result.def;
+            var obj;
+            for(var i = 0; i != mass.length; i++){
+                for(var j = 0; j < mass[i].tr.length & j < 2; j++){
+                    obj = {};
+                    obj.english = mass[0].text;
+                    obj.russian = mass[i].tr[j].text;
+                    obj.meaning = mass[i].tr[j].mean[0].text;
+                    obj.example = mass[i].tr[j].ex[0].text;
+                    addOneWord(obj);
+                }
+            }
+
+        }
+
+        var addOneWord = function(obj){
             $.ajax({
                 type: 'POST',
-                url: service + "/add",
+                url: service + '/addList',
                 contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(JSONObject),
+                data: JSON.stringify(obj),
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    loadTranslations(result);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    loadEmptyTable();
+                }
+            })
+        }
+
+        var addWord = function (wordId) {
+            $.ajax({
+                type: 'POST',
+                url: service + "/add/" + wordId,
                 dataType: 'json',
                 async: false,
                 success: function (result) {
@@ -87,10 +135,10 @@
 
             if (Array.isArray(result)) {
                 for(var i = 0; i != size; i++){
-                    list += "<li><a href='' onclick='addWord(" + result[i].english_id  + ","+ result[i].translation_id + "); return false;'>" +result[i].russian + "</a></li>";
+                    list += "<li><a href='' onclick='addWord(" + result[i].id  + "); return false;'>" +result[i].russian + "</a></li>";
                 }
             } else{
-                list += "<li><a href='' onclick='addWord(" + result.english_id  + ","+ result.translation_id + "); return false;'>" + result.russian + "</a></li>";
+                list += "<li><a href='' onclick='addWord(" + result.id  + "); return false;'>" + result.russian + "</a></li>";
             }
 
             $('#translations').html(list);
@@ -108,13 +156,47 @@
 
             if (Array.isArray(result)) {
                 for(var i = 0; i != size; i++){
-                    table += "<tr><td>#</td><td>" +result[i].english + "</td><td>" +result[i].russian + "</td><td>" + result[i].meaning  + "</td><td>" + result[i].example + "</td></tr>"
+                    table += "<tr><td>#</td><td>" +result[i].english + "</td><td>" +result[i].russian + "</td><td>" + result[i].meaning  + "</td><td>" + result[i].example + "</td><td><button type='button' class='btn btn-danger' onclick='deleteWord(" + result[i].id + ")'>Удалить</button></td></tr>"
                 }
             } else{
-                table += "<tr><td>#</td><td>" +result.english + "</td><td>" + result.russian + "</td><td>" + result.meaning + "</td><td>" + result.example + "</td></tr>"
+                table += "<tr><td>#</td><td>" +result.english + "</td><td>" + result.russian + "</td><td>" + result.meaning + "</td><td>" + result.example + "</td><td><button type='button' class='btn btn-danger' onclick='deleteWord(" + result.id + ")'>Удалить</button></td></tr>"
             }
 
             $('#response').html(table);
+        };
+
+        var deleteWord = function (id) {
+            $.ajax({
+                type: 'DELETE',
+                url: service + "/delete/" + id,
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    loadWords(result);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+        };
+
+        var findWords = function () {
+            if ($('#word').val() == null || $('#word').val() == ""){
+                restGet('all');
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: service + "/find/" + $('#word').val(),
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    loadWords(result);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }
+            });
         };
     </script>
 
@@ -142,7 +224,7 @@
             <ul class="nav navbar-nav navbar-middle">
                 <li><a href="${contextPath}/ru/welcome">Тренеровки слов</a></li>
                 <li><a href="#about">Тренеровки грамматики</a></li>
-                <li class="active"><a href="#">Словарь</a></li>
+                <li class="active"><a href="${contextPath}/ru/dictionary">Словарь</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <form id="logoutForm" method="POST" action="${contextPath}/logout">
@@ -158,22 +240,8 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Overview</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Analytics</a></li>
-                <li><a href="#">Export</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item</a></li>
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-                <li><a href="">More navigation</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
+                <li class="active"><a href="${contextPath}/ru/dictionary">Словарь</a></li>
+                <li class="active"><a href="${contextPath}/ru/progress">Прогресс</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -185,10 +253,9 @@
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search" id="word" autocomplete="off">
                     </div>
-                    <ul class="dropdown-menu" id="translations">
-
-                    </ul>
-                    <button type="submit" class="btn btn-default dropdown-toggle" data-toggle="dropdown" onclick="getTranslations()">Добавить</button>
+                    <ul class="dropdown-menu" id="translations"></ul>
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" onclick="getTranslations()">Добавить</button>
+                    <button type="button" class="btn btn-default" onclick="findWords()">Найти</button>
                     </div>
                 </form>
                 <table class="table table-striped">
@@ -199,6 +266,7 @@
                         <th>Русский</th>
                         <th>Meaning</th>
                         <th>Example</th>
+                        <th>Удалить</th>
                     </tr>
                     </thead>
                     <tbody id="response">

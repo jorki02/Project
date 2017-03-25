@@ -6,11 +6,11 @@ import java.util.Set;
 /**
  * Created by Саша on 07.03.2017.
  */
-@Entity
-@Table(name = "translation")
+/*@Entity
+@Table(name = "translation")*/
 public class Translation {
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -64,6 +64,6 @@ public class Translation {
 
     public void setUsers(Set<User> users) {
         this.users = users;
-    }
+    }*/
 
 }

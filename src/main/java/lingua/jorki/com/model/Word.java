@@ -6,24 +6,24 @@ import java.util.Set;
 /**
  * Created by Саша on 07.03.2017.
  */
-@Entity
-@Table(name="words")
+/*@Entity
+@Table(name="words")*/
 public class Word {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /*@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)*/
     private Long id;
 
-    @Column(name = "english")
+    /*@Column(name = "english")*/
     private String english;
 
-    @Column(name = "russian")
+    /*@Column(name = "russian")*/
     private String russian;
 
-    @Column(name = "example")
+    /*@Column(name = "example")*/
     private String example;
 
-    @ManyToMany(mappedBy = "words")
+    /*@ManyToMany(mappedBy = "words")*/
     private Set<User> users;
 
     public Long getId() {

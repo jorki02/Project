@@ -16,10 +16,39 @@
 
     <!-- Bootstrap core CSS -->
     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="${contextPath}/css/common.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="navbar-static-top.css" rel="stylesheet">
+    <link href="${contextPath}/css/welcome.css" rel="stylesheet">
+    <script src="${contextPath}/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            countRemainingWords("tw");
+            countRemainingWords("wt");
+            countRemainingWords("cards");
+
+        });
+
+        var service = '/ru/train';
+
+        var countRemainingWords = function (type) {
+            $.ajax({
+                type: 'GET',
+                url: service + "/remaining/" + type,
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    var table = "Оставшиеся слова: " + result;
+                    $('#remaining-words-' + type).html(table);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+        };
+
+    </script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -52,24 +81,53 @@
                 <form id="logoutForm" method="POST" action="${contextPath}/logout">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
-                <li class="active"><a class="btn btn-default navbar-btn" onclick="document.forms['logoutForm'].submit()">Выйти</a></li>
+                <li class="active"><a class="btn btn-default navbar-btn"
+                                      onclick="document.forms['logoutForm'].submit()">Выйти</a></li>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
     </div>
 </div>
-
 
 <div class="container">
 
     <!-- Main component for a primary marketing message or call to action -->
     <div class="jumbotron">
-        <h1>Статическое меню</h1>
-        <p>Этот шаблон <strong>статической панели навигации</strong> создан для наглядного примера. Меню растянуто на всю ширину экрана и прижато к верхней части страницы.</p>
-        <p>Чтобы увидеть разницу между простым, статическим и фиксированным меню, покрутите колесо мышки.</p>
-        <p>
-            <a class="btn btn-lg btn-primary" role="button">Панель навигации &raquo;</a>
-        </p>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="description">
+                    <h2>Слово - Перевод</h2>
+                    <p>Тренировка “Слово-перевод” улучшает навык перевода слов с английского на ваш родной язык, помогая
+                        лучше понимать английские тексты и речь. </p>
+                </div>
+                <div id="remaining-words-wt" class="remaining-words text-muted"></div>
+                <div class="button-train">
+                    <a class="btn btn-primary" href="/ru/train/translationWord" role="button">Тренеровать</a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="description">
+                    <h2>Перевод - Слово</h2>
+                    <p>Тренировка “Перевод-слово” развивает навык перевода с вашего родного языка на английский, что
+                        позволяет лучше выражать свои мысли на английском языке.</p>
+                </div>
+                <div id="remaining-words-tw" class="remaining-words text-muted"></div>
+                <div class="button-train">
+                    <a class="btn btn-primary" href="/ru/train/wordTranslation" role="button">Тренеровать</a>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="description">
+                    <h2>Словарные карточки</h2>
+                    <p>Словарные карточки помогают быстро проверить знания английских слов из личного словаря.</p>
+                </div>
+                <div id="remaining-words-cards" class="remaining-words text-muted"></div>
+                <div class="button-train">
+                    <a class="btn btn-primary" href="/ru/train/cards" role="button">Тренеровать</a>
+                </div>
+            </div>
+        </div>
     </div>
+
 
 </div> <!-- /container -->
 

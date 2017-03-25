@@ -42,8 +42,7 @@
 }
 
 .table-responsive{
-    height: 400px;
-    overflow: auto;
+    min-height: 400px;
 }
 
 /* Sidebar navigation */

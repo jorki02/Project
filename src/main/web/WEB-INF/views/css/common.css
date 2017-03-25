@@ -1,3 +1,31 @@
 .navbar-middle {
     padding-left: 200px;
 }
+
+div .button-train{
+    width : 25%;
+}
+
+a .thumbnail{
+    background-color: #5bc0de;
+    border-color: #357ebd;
+    text-decoration: none;
+}
+
+
+a {
+    text-decoration: none; /* Отменяем подчеркивание у ссылки */
+}
+
+div .button-train-img{
+    position: relative;
+    padding-top: 26px;
+    height: 60px;
+    margin-bottom: 13px;
+    text-align: center;
+}
+
+div .button-train-content{
+    margin-top: 60px;
+    text-align: center;
+}

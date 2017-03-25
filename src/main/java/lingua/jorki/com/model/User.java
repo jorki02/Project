@@ -32,7 +32,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable(name = "user_word_translation_progress", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "word_id"))
     private Set<Word> words;
@@ -45,7 +45,7 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "user_word_translation_progress", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "progress_id"))
-    private Progress progress;
+    private Progress progress;*/
 
     public Long getId() {
         return id;
@@ -87,7 +87,7 @@ public class User {
         this.roles = roles;
     }
 
-    public Set<Translation> getTranslations() {
+    /*public Set<Translation> getTranslations() {
         return translations;
     }
 
@@ -101,5 +101,5 @@ public class User {
 
     public void setWords(Set<Word> words) {
         this.words = words;
-    }
+    }*/
 }

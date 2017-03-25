@@ -1,0 +1,15 @@
+div .description{
+    text-align: center;
+    height:260px;
+}
+
+div .remaining-words{
+    margin:10px;
+    text-align: center;
+    font-size: 16px;
+}
+
+div .button-train{
+    margin-left: 105px;
+    margin-top: 15px;
+}

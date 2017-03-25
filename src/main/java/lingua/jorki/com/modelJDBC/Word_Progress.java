@@ -5,60 +5,42 @@ import java.util.Date;
 /**
  * Created by Саша on 12.03.2017.
  */
-public class Progress {
+public class Word_Progress {
 
-    private Long user_id;
-    private Long word_id;
-    private Date last_repeat;
-    private Integer count_repeat;
-    private Date add_date;
-    private Date next_repeat;
+    private String word;
+    private Long count_repeat;
+    private Long count_repeat_translation;
+    private Long count_repeat_word;
 
-    public Long getUser_id() {
-        return user_id;
+    public String getWord() {
+        return word;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setWord(String word) {
+        this.word = word;
     }
 
-    public Long getWord_id() {
-        return word_id;
-    }
-
-    public void setWord_id(Long word_id) {
-        this.word_id = word_id;
-    }
-
-    public Date getLast_repeat() {
-        return last_repeat;
-    }
-
-    public void setLast_repeat(Date last_repeat) {
-        this.last_repeat = last_repeat;
-    }
-
-    public Integer getCount_repeat() {
+    public Long getCount_repeat() {
         return count_repeat;
     }
 
-    public void setCount_repeat(Integer count_repeat) {
+    public void setCount_repeat(Long count_repeat) {
         this.count_repeat = count_repeat;
     }
 
-    public Date getAdd_date() {
-        return add_date;
+    public Long getCount_repeat_translation() {
+        return count_repeat_translation;
     }
 
-    public void setAdd_date(Date add_date) {
-        this.add_date = add_date;
+    public void setCount_repeat_translation(Long count_repeat_translation) {
+        this.count_repeat_translation = count_repeat_translation;
     }
 
-    public Date getNext_repeat() {
-        return next_repeat;
+    public Long getCount_repeat_word() {
+        return count_repeat_word;
     }
 
-    public void setNext_repeat(Date next_repeat) {
-        this.next_repeat = next_repeat;
+    public void setCount_repeat_word(Long count_repeat_word) {
+        this.count_repeat_word = count_repeat_word;
     }
 }

@@ -5,11 +5,11 @@ import javax.persistence.*;
 /**
  * Created by Саша on 08.03.2017.
  */
-@Entity
-@Table(name = "progress")
+/*@Entity
+@Table(name = "progress")*/
 public class Progress {
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -52,5 +52,5 @@ public class Progress {
 
     public void setUser(User user) {
         this.user = user;
-    }
+    }*/
 }
