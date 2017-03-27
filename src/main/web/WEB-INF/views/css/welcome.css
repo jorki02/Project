@@ -13,3 +13,8 @@ div .button-train{
     margin-left: 105px;
     margin-top: 15px;
 }
+
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}

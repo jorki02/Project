@@ -49,7 +49,7 @@
 
             if (Array.isArray(result)) {
                 for(var i = 0; i != size; i++){
-                    var bar_value = result[i].count_repeat*(20);
+                    var bar_value = (result[i].count_repeat + result[i].count_repeat_translation + result[i].count_repeat_word)*(100./15.);
                     table += "<tr><td>#</td><td>" + result[i].word + "</td><td>" + "<div class='progress'><div class='progress-bar' role='progressbar' aria-valuenow='" + bar_value + "' aria-valuemin='0' aria-valuemax='100' style='width: " + bar_value + "%;'></div></div>" + "</td></tr>";
                 }
             } else{

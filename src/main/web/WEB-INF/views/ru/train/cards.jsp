@@ -22,12 +22,27 @@
     <script src="${contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript">
 
+        var size;
+        var listOfWords = [];
+        var currentWord = 0;
+
         $(document).ready(function () {
 
-            restGet();
-            setWord();
+            startTrain();
 
         });
+
+        var startTrain = function () {
+            size = 0;
+            listOfWords = [];
+            currentWord = 0;
+            var end = document.getElementById('end-part');
+            end.style.display = "none";
+            var train = document.getElementById('train-part');
+            train.style.display = "block";
+            restGet();
+            setWord();
+        };
 
         var service = '/ru/train';
 
@@ -45,9 +60,6 @@
                 }
             });
         };
-
-        var size;
-        var listOfWords = [];
 
         var loadWords = function (result) {
             if (Array.isArray(result)) {
@@ -78,17 +90,14 @@
 
         }
 
-        var i = 0;
-
         var setWord = function () {
-            if (i < size) {
-                var table = "<h1>" + listOfWords[i].english + "</h1>";
+            if (currentWord < size) {
+                var table = "<h1>" + listOfWords[currentWord].english + "</h1>";
                 var elem = document.getElementById('answer-button');
                 elem.style.visibility = 'visible';
                 $('#english').html(table);
             } else {
-                var table = "<h1>Конец</h1>";
-                $('#english').html(table);
+                setEnd();
             }
         }
 
@@ -109,7 +118,7 @@
         }
 
         var setRussianWord = function () {
-            var table = "<h1>" + listOfWords[i].russian + "</h1>";
+            var table = "<h1>" + listOfWords[currentWord].russian + "</h1>";
             var elem = document.getElementById('answer-button');
             elem.style.visibility = 'hidden';
             $('#russian').html(table);
@@ -119,41 +128,41 @@
             var string = "";
 
             if (count == 0) {
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 0);'>Повтор через 10 минут</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 1);'>Повтор через день</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 2);'>Повтор через 3 дня</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 0);'>Повтор через 10 минут</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 1);'>Повтор через день</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 2);'>Повтор через 3 дня</button>";
             }
 
             if (count == 1) {
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 0);'>Повтор через 10 минут</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 1);'>Повтор через день</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 2);'>Повтор через 3 дня</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 3);'>Повтор через 7 дней</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 0);'>Повтор через 10 минут</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 1);'>Повтор через день</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 2);'>Повтор через 3 дня</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 3);'>Повтор через 7 дней</button>";
             }
 
             if (count == 2) {
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 0);'>Повтор через 10 минут</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 2);'>Повтор через 3 дня</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 3);'>Повтор через 7 дней</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 4);'>Повтор через 14 дней</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 0);'>Повтор через 10 минут</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 2);'>Повтор через 3 дня</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 3);'>Повтор через 7 дней</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 4);'>Повтор через 14 дней</button>";
             }
 
             if (count == 3) {
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 0);'>Повтор через 10 минут</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 3);'>Повтор через 7 дней</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 4);'>Повтор через 14 дней</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 5);'>Повтор через 30 дней</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 0);'>Повтор через 10 минут</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 3);'>Повтор через 7 дней</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 4);'>Повтор через 14 дней</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 5);'>Повтор через 30 дней</button>";
             }
 
             if (count == 4) {
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 0);'>Повтор через 10 минут</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 4);'>Повтор через 14 дней</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 5);'>Повтор через 30 дней</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 0);'>Повтор через 10 минут</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 4);'>Повтор через 14 дней</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 5);'>Повтор через 30 дней</button>";
             }
 
             if (count == 5) {
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 0);'>Повтор через 10 минут</button>";
-                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[i].id, 5);'>Повтор через 30 дней</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 0);'>Повтор через 10 минут</button>";
+                string += "<button type='button' class='btn btn-default' onclick='setRepeat(listOfWords[currentWord].id, 5);'>Повтор через 30 дней</button>";
             }
 
             $('#dates').html(string);
@@ -167,7 +176,7 @@
                 data: JSON.stringify(count),
                 cache: false,
                 complete: function (result) {
-                    i++;
+                    currentWord++;
                     setEmptyRussian();
                     setWord();
                     $('#dates').html("");
@@ -175,9 +184,33 @@
             });
         };
 
-        var setEmptyRussian = function(){
+        var setEmptyRussian = function () {
             $('#russian').html("");
         }
+
+        var setEnd = function () {
+            $.ajax({
+                type: 'GET',
+                url: "/ru/train/remaining/cards",
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    var table = "Оставшиеся слова: " + result;
+                    var end = document.getElementById('end-part');
+                    end.style.display = "block";
+                    var train = document.getElementById('train-part');
+                    train.style.display = "none";
+                    var continueButton = document.getElementById('continue-button');
+                    if (result == 0) {
+                        continueButton.disabled = true;
+                    }
+                    $('#remaining-words').html(table);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+        };
 
     </script>
 
@@ -223,14 +256,28 @@
     <div class="jumbotron">
         <div class="row word-pane">
             <div class="col-lg-12">
-                <div id="english">
+                <div id="end-part">
+                    <h1 id="remaining-words">
+                    </h1>
+                    <div id="buttons">
+                        <a id="return-button" href="${contextPath}/ru/welcome" class="btn btn-primary" role="button">Вернуться
+                            к тренеровкам</a>
+                        <button id="continue-button" type="button" class="btn btn-primary" onclick="startTrain();">
+                            Продолжить
+                        </button>
+                    </div>
                 </div>
-                <div id="russian">
-                </div>
-                <div id="answer-button">
-                    <button type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id)'>Ответ</button>
-                </div>
-                <div id="dates" class="dates">
+                <div id="train-part">
+                    <div id="english">
+                    </div>
+                    <div id="russian">
+                    </div>
+                    <div id="answer-button">
+                        <button type='button' class='btn btn-default' onclick='getRepeat(listOfWords[currentWord].id)'>Ответ
+                        </button>
+                    </div>
+                    <div id="dates" class="dates">
+                    </div>
                 </div>
             </div>
         </div>

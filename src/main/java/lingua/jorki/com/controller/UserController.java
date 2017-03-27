@@ -1,21 +1,17 @@
 package lingua.jorki.com.controller;
 
 import lingua.jorki.com.model.User;
-import lingua.jorki.com.modelJDBC.Word;
 import lingua.jorki.com.service.SecurityService;
 import lingua.jorki.com.service.TrainService;
 import lingua.jorki.com.service.UserService;
 import lingua.jorki.com.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.List;
 
 /**
  * Controller for {@link lingua.jorki.com.model.User}'s pages.
@@ -103,13 +99,13 @@ public class UserController {
     @RequestMapping(value = {"/ru/train/translationWord"}, method = RequestMethod.GET)
     public String translationWord(Model model) {
 
-        return "ru/train/translationWord";
+        return "ru/train/wordTranslation";
     }
 
     @RequestMapping(value = {"/ru/train/wordTranslation"}, method = RequestMethod.GET)
     public String wordTranslation(Model model) {
 
-        return "ru/train/wordTranslation";
+        return "ru/train/translationWord";
     }
 
 }

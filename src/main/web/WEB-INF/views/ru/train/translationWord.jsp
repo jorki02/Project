@@ -24,13 +24,26 @@
 
         $(document).ready(function () {
 
-            restGet();
-            restGetListOfWrongWords();
-            setWord();
+            startTrain();
 
         });
 
-        var service = '/ru/train/translation';
+        var startTrain = function () {
+            size = 0;
+            sizeWrongWords = 0;
+            listOfWords = [];
+            listOfWrongWords = [];
+            currentWord = 0;
+            var end = document.getElementById('end-part');
+            end.style.display = "none";
+            var train = document.getElementById('train-part');
+            train.style.display = "block";
+            restGet();
+            restGetListOfWrongWords();
+            setWord();
+        };
+
+        var service = '/ru/train/words';
 
         var restGet = function () {
             $.ajax({
@@ -116,27 +129,26 @@
 
             var arr = randomInteger(0, sizeWrongWords - 1, 4);
             if (i < size) {
-                var word = "<h1>" + listOfWords[i].english + "</h1>";
+                var word = "<h1>" + listOfWords[i].russian + "</h1>";
                 var answers = [];
-                answers[0] = "<button id='right-answer' type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id); fillAnswer(); stunAnswers()'>" + listOfWords[i].russian + "</button>";
-                answers[1] = "<button id='answer1' type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id); fillAnswer(); fillThis(this); stunAnswers();'>" + listOfWrongWords[arr[0]].russian + "</button>";
-                answers[2] = "<button id='answer2' type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id); fillAnswer(); fillThis(this); stunAnswers();'>" + listOfWrongWords[arr[1]].russian + "</button>";
-                answers[3] = "<button id='answer3' type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id); fillAnswer(); fillThis(this); stunAnswers();'>" + listOfWrongWords[arr[2]].russian + "</button>";
-                answers[4] = "<button id='answer4' type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id); fillAnswer(); fillThis(this); stunAnswers();'>" + listOfWrongWords[arr[3]].russian + "</button>";
+                answers[0] = "<button id='right-answer' type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id); fillAnswer(); stunAnswers()'>" + listOfWords[i].english + "</button>";
+                answers[1] = "<button id='answer1' type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id); fillAnswer(); fillThis(this); stunAnswers();'>" + listOfWrongWords[arr[0]].english + "</button>";
+                answers[2] = "<button id='answer2' type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id); fillAnswer(); fillThis(this); stunAnswers();'>" + listOfWrongWords[arr[1]].english + "</button>";
+                answers[3] = "<button id='answer3' type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id); fillAnswer(); fillThis(this); stunAnswers();'>" + listOfWrongWords[arr[2]].english + "</button>";
+                answers[4] = "<button id='answer4' type='button' class='btn btn-default' onclick='getRepeat(listOfWords[i].id); fillAnswer(); fillThis(this); stunAnswers();'>" + listOfWrongWords[arr[3]].english + "</button>";
                 answers.sort(compareRandom);
                 var response = "";
-                for(var k = 0; k < answers.length; k++){
+                for (var k = 0; k < answers.length; k++) {
                     response += answers[k];
                 }
                 $('#word').html(word);
                 $('#answers').html(response);
             } else {
-                var table = "<h1>Конец</h1>";
-                $('#table-quiz').html(table);
+                setEnd();
             }
         }
 
-        var compareRandom = function(a, b) {
+        var compareRandom = function (a, b) {
             return Math.random() - 0.5;
         }
 
@@ -147,7 +159,7 @@
             return res;
         }
 
-        var stunAnswers = function(){
+        var stunAnswers = function () {
             var answer = document.getElementById('right-answer');
             var elem1 = document.getElementById('answer1');
             var elem2 = document.getElementById('answer2');
@@ -160,12 +172,12 @@
             elem4.disabled = true;
         }
 
-        var fillAnswer = function (){
+        var fillAnswer = function () {
             var elem = document.getElementById('right-answer');
             elem.className = "btn btn-success";
         }
 
-        var fillThis = function(button){
+        var fillThis = function (button) {
             button.className = "btn btn-danger";
         }
 
@@ -243,6 +255,30 @@
             });
         };
 
+        var setEnd = function () {
+            $.ajax({
+                type: 'GET',
+                url: "/ru/train/remaining/tw",
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    var table = "Оставшиеся слова: " + result;
+                    var end = document.getElementById('end-part');
+                    end.style.display = "block";
+                    var train = document.getElementById('train-part');
+                    train.style.display = "none";
+                    var continueButton = document.getElementById('continue-button');
+                    if (result == 0) {
+                        continueButton.disabled = true;
+                    }
+                    $('#remaining-words').html(table);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+        };
+
     </script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -288,9 +324,22 @@
         <div class="row word-pane">
             <div class="col-lg-12">
                 <div id="table-quiz">
-                    <div id="word" class="col-md-2-offset col-md-4">
+                    <div id="end-part">
+                        <h1 id="remaining-words">
+                        </h1>
+                        <div id="buttons">
+                            <a id="return-button" href="${contextPath}/ru/welcome" class="btn btn-primary"
+                               role="button">Вернуться к тренеровкам</a>
+                            <button id="continue-button" type="button" class="btn btn-primary" onclick="startTrain();">
+                                Продолжить
+                            </button>
+                        </div>
                     </div>
-                    <div id="answers" class="col-md-4-offset col-md-4 btn-group-vertical">
+                    <div id="train-part">
+                        <div id="word" class="col-md-2-offset col-md-4">
+                        </div>
+                        <div id="answers" class="col-md-4-offset col-md-4 btn-group-vertical">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -303,4 +352,3 @@
 
 </body>
 </html>
-

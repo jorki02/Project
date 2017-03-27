@@ -40,6 +40,9 @@
                 async: false,
                 success: function (result) {
                     var table = "Оставшиеся слова: " + result;
+                    if (result == 0) {
+                        $("#button-train-" + type).addClass("disabledbutton");
+                    }
                     $('#remaining-words-' + type).html(table);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -100,7 +103,7 @@
                         лучше понимать английские тексты и речь. </p>
                 </div>
                 <div id="remaining-words-wt" class="remaining-words text-muted"></div>
-                <div class="button-train">
+                <div id="button-train-wt"  class="button-train">
                     <a class="btn btn-primary" href="/ru/train/translationWord" role="button">Тренеровать</a>
                 </div>
             </div>
@@ -111,7 +114,7 @@
                         позволяет лучше выражать свои мысли на английском языке.</p>
                 </div>
                 <div id="remaining-words-tw" class="remaining-words text-muted"></div>
-                <div class="button-train">
+                <div id="button-train-tw" class="button-train">
                     <a class="btn btn-primary" href="/ru/train/wordTranslation" role="button">Тренеровать</a>
                 </div>
             </div>
@@ -121,8 +124,9 @@
                     <p>Словарные карточки помогают быстро проверить знания английских слов из личного словаря.</p>
                 </div>
                 <div id="remaining-words-cards" class="remaining-words text-muted"></div>
-                <div class="button-train">
-                    <a class="btn btn-primary" href="/ru/train/cards" role="button">Тренеровать</a>
+                <div id="button-train-cards" class="button-train">
+                    <a class="btn btn-primary" href="/ru/train/cards"
+                       role="button">Тренеровать</a>
                 </div>
             </div>
         </div>
